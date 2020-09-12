@@ -5,7 +5,7 @@
 ## This program is licenced under the BSD 2-Clause licence,
 ## contained in the LICENCE file in this directory.
 
-from __future__ import print_function
+
 
 import matplotlib
 matplotlib.use('Agg')
@@ -165,7 +165,7 @@ class Operator:
         Get filtering threshold by marking validation set.
         """
         thrs = dict()
-        for name, detector in self.det_dict.items():
+        for name, detector in list(self.det_dict.items()):
             num = int(len(self.data.validation_data) * drop_rate[name])
             marks = detector.mark(self.data.validation_data)
             marks = np.sort(marks)
@@ -200,8 +200,8 @@ class Operator:
         collector: Number of examples that escaped each detector.
         """
         collector = dict()
-        all_pass = np.array(range(10000))
-        for name, detector in self.det_dict.items():
+        all_pass = np.array(list(range(10000)))
+        for name, detector in list(self.det_dict.items()):
             marks = detector.mark(X)
             idx_pass = np.argwhere(marks < thrs[name])
             collector[name] = len(idx_pass)
@@ -210,7 +210,7 @@ class Operator:
 
     def print(self):
         components = [self.reformer, self.classifier]
-        return " ".join(map(lambda obj: getattr(obj, "print")(), components))
+        return " ".join([getattr(obj, "print")() for obj in components])
 
 
 class AttackData:

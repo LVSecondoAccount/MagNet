@@ -48,7 +48,7 @@ class DenoisingAutoEncoder:
             elif layer == "average":
                 x = AveragePooling2D((2, 2), padding="same")(x)
             else:
-                print(layer, "is not recognized!")
+                print((layer, "is not recognized!"))
                 exit(0)
 
         for layer in reversed(structure):
